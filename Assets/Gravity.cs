@@ -8,7 +8,7 @@ public class Gravity : MonoBehaviour
 	void FixedUpdate ()
 	{
 		Collider[] cols = Physics.OverlapSphere (transform.position, range); 
-		Debug.Log ("cols: "+cols.Length);
+		//Debug.Log ("cols: "+cols.Length);
 		List<Rigidbody> rbs = new List<Rigidbody> ();
 		
 		foreach (Collider c in cols) {
@@ -17,7 +17,9 @@ public class Gravity : MonoBehaviour
 			if (rb != null && rb != GetComponent<Rigidbody>() && !rbs.Contains (rb)) {
 				rbs.Add (rb);
 				Vector3 offset = transform.position - c.transform.position;
-				rb.AddForce (offset / offset.sqrMagnitude * GetComponent<Rigidbody>().mass);
+				Vector3 force = offset / offset.sqrMagnitude * GetComponent<Rigidbody>().mass;
+				Debug.Log("force: "+force);
+				rb.AddForce (force);
 			}
 		}
 	}
